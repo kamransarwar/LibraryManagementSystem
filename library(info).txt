@@ -1,0 +1,38 @@
+Library System:
+    - add new book
+    - editing book
+    - deleting book
+    - categories book
+    - search
+    - users , login , signup
+    - setting [categories , outhor , publisher]
+    - day to day operation
+    - reports [Execl Files]
+
+Book:
+    - title
+    - code
+    - desc
+    - category
+    - price
+    - outhor
+    - publisher
+
+users:
+    - username
+    - password
+    - email address
+
+day_to_day:
+    - book title
+    - retrieve \ rent
+    - days
+
+category:
+    - name
+
+publisher:
+    - name
+
+outhor:
+    - name
