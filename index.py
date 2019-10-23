@@ -19,10 +19,12 @@ class Login(QWidget , login):
         style = open('Themes/darkorange.css', 'r')
         style = style.read()
         self.setStyleSheet(style)
+        self.connectionString = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
 
+    
 
     def Handel_Login(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         username = self.lineEdit.text()
@@ -45,6 +47,7 @@ class Login(QWidget , login):
 class MainApp(QMainWindow , ui):
     def __init__(self):
         QMainWindow.__init__(self)
+        self.connectionString = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
         self.setupUi(self)
         self.Handel_Ui_Changes()
         self.Handel_Buttons()
@@ -61,6 +64,8 @@ class MainApp(QMainWindow , ui):
         self.Show_All_Book()
 
         self.Show_Handel_Day_Operation()
+
+        
 
 
     def Handel_Ui_Changes(self):
@@ -160,7 +165,7 @@ class MainApp(QMainWindow , ui):
         print(date_days)
         print(to_days)
 
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         add_day_operation_query = ("INSERT INTO dayoperations "
@@ -177,7 +182,9 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_Handel_Day_Operation(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        
+        db = self.connectionString
+        #db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
         cur = db.cursor()
 
         show_handel_day_operation_query = ("SELECT book_name, client, type, date_days, to_days,  days FROM dayoperations")
@@ -197,7 +204,8 @@ class MainApp(QMainWindow , ui):
 
 
     def Delete_Day_Operation(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
+        
         cur = db.cursor()
 
         operation_name = self.lineEdit_7.text()
@@ -216,7 +224,8 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_All_Book(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
+        
         cur = db.cursor()
 
         Show_All_Client_query = ("Select book_code, book_name, book_description, book_category, book_outhor, book_publisher, book_price From book ")
@@ -238,8 +247,8 @@ class MainApp(QMainWindow , ui):
 
 
     def Add_New_Book(self):
+        db = self.connectionString
         
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
         cur = db.cursor()
 
         book_title = self.lineEdit_8.text()
@@ -274,7 +283,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Search_Books(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         mycursor = db.cursor()
 
         book_title = self.lineEdit_3.text()
@@ -299,7 +308,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Edit_Books(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         book_id = self.book_id.text()
@@ -330,7 +339,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Delete_Books(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         book_title = self.lineEdit_3.text()
@@ -350,7 +359,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_All_Client(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         Show_All_Client_query = ("Select client_name, client_email, client_nationalid From clients")
@@ -372,7 +381,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Add_New_Client(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         client_name = self.lineEdit_12.text()
@@ -392,7 +401,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Search_Client(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         client_nationalid = self.lineEdit_6.text()
@@ -415,7 +424,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Edit_Client(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         client_id = self.id_client.text()
@@ -440,7 +449,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Delete_Client(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         client_id = self.id_client.text()
@@ -462,7 +471,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Add_New_User(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         user_name= self.user_name.text()
@@ -487,7 +496,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Login(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         user_name = self.lineEdit_21.text()
@@ -516,7 +525,7 @@ class MainApp(QMainWindow , ui):
 
 
         if user_password == user_again_password :
-            db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+            db = self.connectionString
             cur = db.cursor()
 
             edit_user_query = ("update users set user_name=%s, user_email=%s, user_password=%s Where id=%s")
@@ -532,7 +541,7 @@ class MainApp(QMainWindow , ui):
 
     
     def Delete_User(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         user_Name = self.lineEdit_18.text()
@@ -552,7 +561,7 @@ class MainApp(QMainWindow , ui):
 
     def Add_Category(self):
         
-        mydb = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        mydb = self.connectionString
 
         mycursor = mydb.cursor()
 
@@ -571,12 +580,9 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_Category(self):
-        mydb = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
-
+        mydb = self.connectionString
         mycursor = mydb.cursor()
-
         queryString = 'Select category_name from category order by category_name asc;'
-
         mycursor.execute(queryString)
         data = mycursor.fetchall()
         
@@ -593,7 +599,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Delete_Category(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         category_Name = self.lineEdit_28.text()
@@ -609,7 +615,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Add_Author(self):
-        mydb = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
 
         mycursor = mydb.cursor()
 
@@ -626,7 +632,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_Author(self):
-        mydb = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        mydb = self.connectionString
 
         mycursor = mydb.cursor()
 
@@ -648,7 +654,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Delete_Author(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         outhor_Name = self.lineEdit_29.text()
@@ -664,7 +670,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Add_Publisher(self):
-        mydb = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        mydb = self.connectionString
 
         mycursor = mydb.cursor()
 
@@ -685,7 +691,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_Publisher(self):
-        mydb = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        mydb = self.connectionString
 
         mycursor = mydb.cursor()
 
@@ -707,7 +713,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Delete_Publisher(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         publisher_Name = self.lineEdit_30.text()
@@ -727,7 +733,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_Category_Combobox(self):
-        mydb = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        mydb = self.connectionString
         mycursor = mydb.cursor()
 
         queryString = 'Select category_name FROM category'
@@ -745,7 +751,8 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_Author_Combobox(self):
-        mydb = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        mydb = self.connectionString
+        print(mydb)
         mycursor = mydb.cursor()
 
         queryString = 'Select outhor_name FROM outhor'
@@ -764,7 +771,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_Publisher_Combobox(self):
-        mydb = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        mydb = self.connectionString
         mycursor = mydb.cursor()
 
         queryString = 'Select publisher_name FROM publisher'
@@ -786,7 +793,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Export_Day_Operations(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         show_handel_day_operation_query = ("SELECT book_name, client, type, date_days, to_days,  days FROM dayoperations")
@@ -815,7 +822,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Export_Clients(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         Show_All_Client_query = ("Select client_name, client_email, client_nationalid From clients")
@@ -842,7 +849,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Export_Books(self):
-        db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        db = self.connectionString
         cur = db.cursor()
 
         Show_All_Client_query = ("Select book_code, book_name, book_description, book_category, book_outhor, book_publisher, book_price From book ")
