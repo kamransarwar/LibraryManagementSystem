@@ -12,30 +12,30 @@ The Library Management System will have the following listed features:
 	- Data export in the forms of Excel sheets
 
 	Book Catalogue Management
-	- Add new Book
-	- Edit new Book
-	- Delete new Book
+		- Add new Book
+		- Edit new Book
+		- Delete new Book
 	
 	Book Catagories Management
-	- Add new Category
-	- Delete new Category
-	- Edit new Category
+		- Add new Category
+		- Delete new Category
+		- Edit new Category
 	
 	Search
-	- Search book, author, publisher, client and username
+		- Search book, author, publisher, client and username
 	 
 	Users Managment
-	- Ability to create, edit and remove user 
+		- Ability to create, edit and remove user 
 	
 	Book Transactions
-	- Ability to rent and retreive back books
+		- Ability to rent and retreive back books
 	
 	Book Author Management
-	- Add new Author
-	- Edit new Author
-	- Delete new Author
+		- Add new Author
+		- Edit new Author
+		- Delete new Author
 	
 	Book Publisher Management
-	- Add new Publisher
-	- Edit new Publisher
-	- Delete new Publisher
+		- Add new Publisher
+		- Edit new Publisher
+		- Delete new Publisher
