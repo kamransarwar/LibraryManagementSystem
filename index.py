@@ -220,7 +220,7 @@ class MainApp(QMainWindow , ui):
     def Show_All_Book(self):
         cur = self.connectionString.cursor()
 
-        Show_All_Client_query = ("Select book_code, book_name, book_description, book_category, book_outhor, book_publisher, book_price From book ")
+        Show_All_Client_query = ("Select book_code, book_name, book_description, book_category, book_author, book_publisher, book_price From book ")
         cur.execute(Show_All_Client_query)
         data = cur.fetchall()
 
@@ -245,15 +245,15 @@ class MainApp(QMainWindow , ui):
         book_description = self.textEdit.toPlainText()
         book_code = self.lineEdit_10.text()
         book_category = self.comboBox_9.currentText()
-        book_outhor = self.comboBox_11.currentText()
+        book_author = self.comboBox_11.currentText()
         book_publisher = self.comboBox_10.currentText()
         book_price = self.lineEdit_9.text()
 
         add_book_sql_query = ("INSERT INTO book "
-                        "(book_name, book_description, book_code, book_category, book_outhor, book_publisher, book_price)"
+                        "(book_name, book_description, book_code, book_category, book_author, book_publisher, book_price)"
                         "VALUES (%s, %s, %s, %s, %s, %s, %s)")
 
-        add_book_sql_query_data = (book_title, book_description, book_code, book_category, book_outhor, book_publisher, book_price)
+        add_book_sql_query_data = (book_title, book_description, book_code, book_category, book_author, book_publisher, book_price)
 
         cur.execute(add_book_sql_query, add_book_sql_query_data)
 
@@ -304,7 +304,7 @@ class MainApp(QMainWindow , ui):
         book_description = self.textEdit_2.toPlainText()
         book_code = self.lineEdit_2.text()
         book_category = self.comboBox_3.currentText()
-        book_outhor = self.comboBox_5.currentText()
+        book_author = self.comboBox_5.currentText()
         book_publisher = self.comboBox_4.currentText()
         book_price = self.lineEdit_4.text()
 
@@ -312,10 +312,10 @@ class MainApp(QMainWindow , ui):
         Search_Book_title = self.lineEdit_3.text()
         
         edit_book_query = ("update book set book_name=%s, book_description=%s, book_code=%s, book_category=%s,"
-                        " book_outhor=%s, book_publisher=%s, book_price=%s "
+                        " book_author=%s, book_publisher=%s, book_price=%s "
                         "Where id=%s")
 
-        edit_book_query_data = (book_title, book_description, book_code, book_category, book_outhor, book_publisher, book_price, int(book_id))
+        edit_book_query_data = (book_title, book_description, book_code, book_category, book_author, book_publisher, book_price, int(book_id))
         
         cur.execute(edit_book_query, edit_book_query_data)
 
@@ -584,13 +584,13 @@ class MainApp(QMainWindow , ui):
     def Add_Author(self):
         cur = self.connectionString.cursor()
 
-        outhor_name = self.lineEdit_23.text()
+        author_name = self.lineEdit_23.text()
 
-        queryString = 'INSERT INTO outhor (outhor_name) VALUES ("' + outhor_name + '")'
+        queryString = 'INSERT INTO author (author_name) VALUES ("' + author_name + '")'
         cur.execute(queryString)
         self.connectionString.commit()
         cur.close()
-        self.statusBar().showMessage('New Author Addedd : ' + outhor_name)
+        self.statusBar().showMessage('New Author Addedd : ' + author_name)
         self.lineEdit_23.setText('')
         self.Show_Author()
         self.Show_Author_Combobox()
@@ -598,7 +598,7 @@ class MainApp(QMainWindow , ui):
 
     def Show_Author(self):
         cur = self.connectionString.cursor()
-        queryString = 'Select outhor_name from outhor order by outhor_name asc'
+        queryString = 'Select author_name from author order by author_name asc'
 
         cur.execute(queryString)
         data = cur.fetchall()
@@ -618,14 +618,14 @@ class MainApp(QMainWindow , ui):
     def Delete_Author(self):
         cur = self.connectionString.cursor()
 
-        outhor_Name = self.lineEdit_29.text()
+        author_Name = self.lineEdit_29.text()
         
-        warning = QMessageBox.warning(self, 'Delete outhor', "Are You Sure You Want To Delete This outhor", QMessageBox.Yes | QMessageBox.No)
+        warning = QMessageBox.warning(self, 'Delete author', "Are You Sure You Want To Delete This author", QMessageBox.Yes | QMessageBox.No)
         if warning == QMessageBox.Yes :
-            delete_outhor_query = ("delete from outhor where outhor_Name=%s")
-            cur.execute(delete_outhor_query, [(outhor_Name)])
+            delete_author_query = ("delete from author where author_Name=%s")
+            cur.execute(delete_author_query, [(author_Name)])
             self.connectionString.commit()
-            self.statusBar().showMessage('outhor Deleted')
+            self.statusBar().showMessage('author Deleted')
             self.Show_Publisher()
         cur.close()
 
@@ -711,17 +711,17 @@ class MainApp(QMainWindow , ui):
     def Show_Author_Combobox(self):
         cur = self.connectionString.cursor()
 
-        queryString = 'Select outhor_name FROM outhor'
+        queryString = 'Select author_name FROM author'
         cur.execute(queryString)
         
         data = cur.fetchall()
 
         self.comboBox_11.clear()
         self.comboBox_5.clear()
-        for outhor in data :
-           # print(outhor)
-            self.comboBox_11.addItem(outhor[0])
-            self.comboBox_5.addItem(outhor[0])
+        for author in data :
+           # print(author)
+            self.comboBox_11.addItem(author[0])
+            self.comboBox_5.addItem(author[0])
         self.connectionString.commit()
         cur.close()
 
@@ -809,7 +809,7 @@ class MainApp(QMainWindow , ui):
         cur = self.connectionString.cursor()
 
 
-        Show_All_Client_query = ("Select book_code, book_name, book_description, book_category, book_outhor, book_publisher, book_price From book ")
+        Show_All_Client_query = ("Select book_code, book_name, book_description, book_category, book_author, book_publisher, book_price From book ")
         cur.execute(Show_All_Client_query)
         data = cur.fetchall()
 
@@ -819,7 +819,7 @@ class MainApp(QMainWindow , ui):
         sheet1.write(0,0, 'Book Name')
         sheet1.write(0,1, 'Book Description')
         sheet1.write(0,2, 'Book Category')
-        sheet1.write(0,3, 'Book Outhor')
+        sheet1.write(0,3, 'Book author')
         sheet1.write(0,4, 'Book Publisher')
         sheet1.write(0,5, 'Book Price')
 

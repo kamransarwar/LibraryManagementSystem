@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `book` (
   `book_description` varchar(100) DEFAULT NULL,
   `book_code` varchar(45) DEFAULT NULL,
   `book_category` varchar(45) DEFAULT NULL,
-  `book_outhor` varchar(45) DEFAULT NULL,
+  `book_author` varchar(45) DEFAULT NULL,
   `book_publisher` varchar(45) DEFAULT NULL,
   `book_price` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -62,11 +62,11 @@ CREATE TABLE IF NOT EXISTS `dayoperations` (
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
--- Dumping structure for table kD9aDA144X.outhor
-CREATE TABLE IF NOT EXISTS `outhor` (
-  `idouthor` int(11) NOT NULL AUTO_INCREMENT,
-  `outhor_name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idouthor`)
+-- Dumping structure for table kD9aDA144X.author
+CREATE TABLE IF NOT EXISTS `author` (
+  `idauthor` int(11) NOT NULL AUTO_INCREMENT,
+  `author_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idauthor`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
