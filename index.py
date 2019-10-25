@@ -19,22 +19,19 @@ class Login(QWidget , login):
         style = open('Themes/darkorange.css', 'r')
         style = style.read()
         self.setStyleSheet(style)
-        self.connectionString = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
-
-    
+        self.connectionString = mysql.connector.connect(option_files='my.conf')
 
     def Handel_Login(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         username = self.lineEdit.text()
         password = self.lineEdit_2.text()
 
-        login_query = ("Select * From users")
+        login_query = "Select * From users"
 
         cur.execute(login_query)
         data = cur.fetchall()
-        for row in data :
+        for row in data:
             if username == row[1] and password == row[3]:
                 print('user match')
                 self.window2 = MainApp()
