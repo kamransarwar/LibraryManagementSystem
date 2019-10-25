@@ -44,7 +44,7 @@ class Login(QWidget , login):
 class MainApp(QMainWindow , ui):
     def __init__(self):
         QMainWindow.__init__(self)
-        self.connectionString = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
+        self.connectionString = mysql.connector.connect(option_files='my.conf')
         self.setupUi(self)
         self.Handel_Ui_Changes()
         self.Handel_Buttons()
