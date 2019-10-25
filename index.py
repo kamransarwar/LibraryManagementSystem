@@ -39,6 +39,8 @@ class Login(QWidget , login):
                 self.window2.show()
             else:
                 self.label.setText('Make Sure You Enterd Your User Name And Password Correctly.')
+        cur.close()
+
 
 
 class MainApp(QMainWindow , ui):
@@ -162,8 +164,7 @@ class MainApp(QMainWindow , ui):
         print(date_days)
         print(to_days)
 
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         add_day_operation_query = ("INSERT INTO dayoperations "
                         "(book_name, client, type, days, date_days, to_days) "
@@ -173,16 +174,14 @@ class MainApp(QMainWindow , ui):
 
         cur.execute(add_day_operation_query, add_day_operation_query_data)
 
-        db.commit()
+        self.connectionString.commit()
+        cur.close()
         self.statusBar().showMessage('Add New Opperation ' + str(add_day_operation_query_data))
         self.Show_Handel_Day_Operation()
 
 
     def Show_Handel_Day_Operation(self):
-        
-        db = self.connectionString
-        #db = mysql.connector.connect(host='remotemysql.com', user='kD9aDA144X', passwd='vdhr8AqoVB', database='kD9aDA144X')
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         show_handel_day_operation_query = ("SELECT book_name, client, type, date_days, to_days,  days FROM dayoperations")
         cur.execute(show_handel_day_operation_query)
@@ -198,12 +197,10 @@ class MainApp(QMainWindow , ui):
 
             row_position = self.tableWidget.rowCount()
             self.tableWidget.insertRow(row_position)
-
+        cur.close()
 
     def Delete_Day_Operation(self):
-        db = self.connectionString
-        
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         operation_name = self.lineEdit_7.text()
 
@@ -211,8 +208,8 @@ class MainApp(QMainWindow , ui):
         if warning == QMessageBox.Yes :
             delete_dayoperations_query = ("delete from dayoperations where client=%s")
             cur.execute(delete_dayoperations_query, [(operation_name)])
-            db.commit()
-            db.close()
+            self.connectionString.commit()
+            cur.close()
             self.statusBar().showMessage('dayoperation Deleted')
             self.Show_Handel_Day_Operation()
 
@@ -221,9 +218,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_All_Book(self):
-        db = self.connectionString
-        
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         Show_All_Client_query = ("Select book_code, book_name, book_description, book_category, book_outhor, book_publisher, book_price From book ")
         cur.execute(Show_All_Client_query)
@@ -239,14 +234,12 @@ class MainApp(QMainWindow , ui):
 
             row_position = self.tableWidget_5.rowCount()
             self.tableWidget_5.insertRow(row_position)
-        db.commit()
-        db.close()
+        self.connectionString.commit()
+        cur.close()
 
 
     def Add_New_Book(self):
-        db = self.connectionString
-        
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         book_title = self.lineEdit_8.text()
         book_description = self.textEdit.toPlainText()
@@ -264,8 +257,8 @@ class MainApp(QMainWindow , ui):
 
         cur.execute(add_book_sql_query, add_book_sql_query_data)
 
-        db.commit()
-        db.close()
+        self.connectionString.commit()
+        cur.close()
         self.statusBar().showMessage('New Book Addedd Successfuly'+ str(add_book_sql_query_data))
         
         self.lineEdit_8.setText('')
@@ -280,14 +273,13 @@ class MainApp(QMainWindow , ui):
 
 
     def Search_Books(self):
-        db = self.connectionString
-        mycursor = db.cursor()
+        cur = self.connectionString.cursor()
 
         book_title = self.lineEdit_3.text()
 
         sql = 'SELECT * FROM book WHERE book_name = %s'
-        mycursor.execute(sql , [(book_title)])
-        data = mycursor.fetchone()
+        cur.execute(sql , [(book_title)])
+        data = cur.fetchone()
 
         if (data):
             self.book_id.setText(str(data[0]))
@@ -300,13 +292,12 @@ class MainApp(QMainWindow , ui):
             self.lineEdit_4.setText(data[7])
         else:
             self.statusBar().showMessage('No Record found')
-        db.commit()
-        db.close()
+        self.connectionString.commit()
+        cur.close()
 
 
     def Edit_Books(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         book_id = self.book_id.text()
         book_title = self.lineEdit_11.text()
@@ -328,16 +319,15 @@ class MainApp(QMainWindow , ui):
         
         cur.execute(edit_book_query, edit_book_query_data)
 
-        db.commit()
-        db.close()
+        self.connectionString.commit()
+        cur.close()
 
         self.statusBar().showMessage('Edit Book Successfuly'+ str(edit_book_query_data))
         self.Show_All_Book()
 
 
     def Delete_Books(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         book_title = self.lineEdit_3.text()
 
@@ -345,10 +335,10 @@ class MainApp(QMainWindow , ui):
         if warning == QMessageBox.Yes :
             delete_book_query = ("delete from book where book_name=%s")
             cur.execute(delete_book_query, [(book_title)])
-            db.commit()
-            db.close()
+            self.connectionString.commit()
             self.statusBar().showMessage('Book Deleted')
             self.Show_All_Book()
+        cur.close()
 
 
     #########################################
@@ -356,8 +346,7 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_All_Client(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         Show_All_Client_query = ("Select client_name, client_email, client_nationalid From clients")
         cur.execute(Show_All_Client_query)
@@ -373,13 +362,11 @@ class MainApp(QMainWindow , ui):
 
             row_position = self.tableWidget_6.rowCount()
             self.tableWidget_6.insertRow(row_position)
-        db.commit()
-        db.close()
-
+        self.connectionString.commit()
+        cur.close()
 
     def Add_New_Client(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         client_name = self.lineEdit_12.text()
         client_email = self.lineEdit_14.text()
@@ -391,15 +378,13 @@ class MainApp(QMainWindow , ui):
 
         Add_New_Client_data = (client_name, client_email, client_nationalid)
         cur.execute(Add_New_Client_query, Add_New_Client_data)
-        db.commit()
-        db.close()
+        self.connectionString.commit()
         self.statusBar().showMessage('New Client Addedd Successfuly'+ str(Add_New_Client_data))
         self.Show_All_Client()
-
+        cur.close()
 
     def Search_Client(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         client_nationalid = self.lineEdit_6.text()
 
@@ -416,13 +401,11 @@ class MainApp(QMainWindow , ui):
             self.lineEdit_27.setText(data[3])
         else:
             self.statusBar().showMessage('No Record found')
-        db.commit()
-        db.close()
-
+        self.connectionString.commit()
+        cur.close()
 
     def Edit_Client(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionStringcursor().cursor()
 
         client_id = self.id_client.text()
         client_name =  self.lineEdit_15.text()
@@ -438,16 +421,14 @@ class MainApp(QMainWindow , ui):
         
         cur.execute(edit_client_query, edit_client_query_data)
 
-        db.commit()
-        db.close()
+        self.connectionString.commit()
 
         self.statusBar().showMessage('Edit Client Successfuly'+ str(edit_client_query_data))
         self.Show_All_Client()
-
+        cur.close()
 
     def Delete_Client(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionStringcursor().cursor()
 
         client_id = self.id_client.text()
 
@@ -457,19 +438,17 @@ class MainApp(QMainWindow , ui):
         if warning == QMessageBox.Yes :
             delete_book_query = ("delete from clients where idclients=%s")
             cur.execute(delete_book_query, [(client_id)])
-            db.commit()
-            db.close()
+            self.connectionString.commit()
             self.statusBar().showMessage('Client Deleted')
             self.Show_All_Client()
-
+        cur.close()
 
     #########################################
     ################# Users #################
 
 
     def Add_New_User(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         user_name= self.user_name.text()
         user_email = self.user_email.text()
@@ -481,20 +460,18 @@ class MainApp(QMainWindow , ui):
             self.user_password.setText('')
             self.user_again_password.setText('')
         else:
-            add_new_user_query = ("INSERT INTO users "
-                        "(user_name, user_email, user_password) "
-                        "VALUES (%s, %s, %s)")
+            add_new_user_query = "INSERT INTO users (user_name, user_email, user_password) VALUES (%s, %s, SHA1(%s))"
             Add_New_User_data = (user_name, user_email, user_password)
             
             cur.execute(add_new_user_query, Add_New_User_data)
             
-            db.commit()
+            self.connectionString.commit()
             self.statusBar().showMessage('New user addedd successfully')
+        cur.close()
 
 
     def Login(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         user_name = self.lineEdit_21.text()
         password = self.lineEdit_20.text()
@@ -511,6 +488,7 @@ class MainApp(QMainWindow , ui):
                 self.lineEdit_18.setText(row[1])
                 self.lineEdit_17.setText(row[2])
                 self.lineEdit_16.setText(row[3])
+        cur.close()
 
 
     def Edit_User(self):
@@ -522,8 +500,7 @@ class MainApp(QMainWindow , ui):
 
 
         if user_password == user_again_password :
-            db = self.connectionString
-            cur = db.cursor()
+            cur = self.connectionString.cursor()
 
             edit_user_query = ("update users set user_name=%s, user_email=%s, user_password=%s Where id=%s")
 
@@ -531,15 +508,14 @@ class MainApp(QMainWindow , ui):
         
             cur.execute(edit_user_query, edit_user_query_data)
 
-            db.commit()
+            self.connectionString.commit()
             self.statusBar().showMessage('User Data Update Successfuly')
         else:
             self.statusBar().showMessage("Make sure you entered your password correctly")
-
+        cur.close()
     
     def Delete_User(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         user_Name = self.lineEdit_18.text()
         
@@ -547,41 +523,37 @@ class MainApp(QMainWindow , ui):
         if warning == QMessageBox.Yes :
             delete_user_query = ("delete from users where user_name=%s")
             cur.execute(delete_user_query, [(user_Name)])
-            db.commit()
-            db.close()
-            self.statusBar().showMessage('User Deleted')
+            self.connectionString.commit()
 
+            self.statusBar().showMessage('User Deleted')
+        cur.close()
 
     ############################################
     ################# Settings #################
 
 
     def Add_Category(self):
-        
-        mydb = self.connectionString
-
-        mycursor = mydb.cursor()
+        cur = self.connectionString.cursor()
 
         category_name = self.lineEdit_22.text()
 
         queryString = 'INSERT INTO category (category_name) VALUES ("' + category_name + '")'
 
-        mycursor.execute(queryString)
+        cur.execute(queryString)
 
-
-        mydb.commit()
+        self.connectionString.commit()
         self.statusBar().showMessage('New Category Addedd : ' + category_name)
         self.lineEdit_22.setText('')
         self.Show_Category()
         self.Show_Category_Combobox()
+        cur.close()
 
 
     def Show_Category(self):
-        mydb = self.connectionString
-        mycursor = mydb.cursor()
+        cur = self.connectionString.cursor()
         queryString = 'Select category_name from category order by category_name asc;'
-        mycursor.execute(queryString)
-        data = mycursor.fetchall()
+        cur.execute(queryString)
+        data = cur.fetchall()
         
         if data:
             self.tableWidget_2.setRowCount(0)
@@ -593,11 +565,10 @@ class MainApp(QMainWindow , ui):
 
                 row_position = self.tableWidget_2.rowCount()
                 self.tableWidget_2.insertRow(row_position)
-
+        cur.close()
 
     def Delete_Category(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         category_Name = self.lineEdit_28.text()
         
@@ -605,23 +576,20 @@ class MainApp(QMainWindow , ui):
         if warning == QMessageBox.Yes :
             delete_category_query = ("delete from category where category_Name=%s")
             cur.execute(delete_category_query, [(category_Name)])
-            db.commit()
-            db.close()
+            self.connectionString.commit()
             self.statusBar().showMessage('category Deleted')
             self.Show_Category()
-
+        cur.close()
 
     def Add_Author(self):
-        db = self.connectionString
-
-        mycursor = mydb.cursor()
+        cur = self.connectionString.cursor()
 
         outhor_name = self.lineEdit_23.text()
 
         queryString = 'INSERT INTO outhor (outhor_name) VALUES ("' + outhor_name + '")'
-        mycursor.execute(queryString)
-        mydb.commit()
-        
+        cur.execute(queryString)
+        self.connectionString.commit()
+        cur.close()
         self.statusBar().showMessage('New Author Addedd : ' + outhor_name)
         self.lineEdit_23.setText('')
         self.Show_Author()
@@ -629,14 +597,11 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_Author(self):
-        mydb = self.connectionString
-
-        mycursor = mydb.cursor()
-
+        cur = self.connectionString.cursor()
         queryString = 'Select outhor_name from outhor order by outhor_name asc'
 
-        mycursor.execute(queryString)
-        data = mycursor.fetchall()
+        cur.execute(queryString)
+        data = cur.fetchall()
         
         if data :
             self.tableWidget_3.setRowCount(0)
@@ -648,11 +613,10 @@ class MainApp(QMainWindow , ui):
 
                 row_position = self.tableWidget_3.rowCount()
                 self.tableWidget_3.insertRow(row_position)
-
+        cur.close()
 
     def Delete_Author(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
 
         outhor_Name = self.lineEdit_29.text()
         
@@ -660,16 +624,14 @@ class MainApp(QMainWindow , ui):
         if warning == QMessageBox.Yes :
             delete_outhor_query = ("delete from outhor where outhor_Name=%s")
             cur.execute(delete_outhor_query, [(outhor_Name)])
-            db.commit()
-            db.close()
+            self.connectionString.commit()
             self.statusBar().showMessage('outhor Deleted')
             self.Show_Publisher()
+        cur.close()
 
 
     def Add_Publisher(self):
-        mydb = self.connectionString
-
-        mycursor = mydb.cursor()
+        cur = self.connectionString.cursor()
 
         publisher_name = self.lineEdit_24.text()
 
@@ -677,9 +639,9 @@ class MainApp(QMainWindow , ui):
 
         print(queryString)
 
-        mycursor.execute(queryString)
-
-        mydb.commit()
+        cur.execute(queryString)
+        self.connectionString.commit()
+        cur.close()
         self.statusBar().showMessage('New Publisher Addedd : ' + publisher_name)
         self.lineEdit_24.setText('')
         print('New Publisher Addedd : ' + publisher_name)
@@ -688,14 +650,12 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_Publisher(self):
-        mydb = self.connectionString
-
-        mycursor = mydb.cursor()
+        cur = self.connectionString.cursor()
 
         queryString = 'Select publisher_name from publisher order by publisher_name asc'
 
-        mycursor.execute(queryString)
-        data = mycursor.fetchall()
+        cur.execute(queryString)
+        data = cur.fetchall()
         
         if data :
             self.tableWidget_4.setRowCount(0)
@@ -708,21 +668,23 @@ class MainApp(QMainWindow , ui):
                 row_position = self.tableWidget_4.rowCount()
                 self.tableWidget_4.insertRow(row_position)
 
+        cur.close()
+
 
     def Delete_Publisher(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
+
 
         publisher_Name = self.lineEdit_30.text()
-        
+
         warning = QMessageBox.warning(self, 'Delete publisher', "Are You Sure You Want To Delete This Publisher", QMessageBox.Yes | QMessageBox.No)
         if warning == QMessageBox.Yes :
             delete_category_query = ("delete from publisher where publisher_Name=%s")
             cur.execute(delete_category_query, [(publisher_Name)])
-            db.commit()
-            db.close()
+            self.connectionString.commit()
             self.statusBar().showMessage('Publisher Deleted')
             self.Show_Publisher()
+        cur.close()
 
 
     ############################################################
@@ -730,32 +692,29 @@ class MainApp(QMainWindow , ui):
 
 
     def Show_Category_Combobox(self):
-        mydb = self.connectionString
-        mycursor = mydb.cursor()
+        cur = self.connectionString.cursor()
 
         queryString = 'Select category_name FROM category'
-        mycursor.execute(queryString)
+        cur.execute(queryString)
         
-        data = mycursor.fetchall()
+        data = cur.fetchall()
 
         self.comboBox_9.clear()
         self.comboBox_3.clear()
         for category in data :
             self.comboBox_9.addItem(category[0])
             self.comboBox_3.addItem(category[0])
-        mydb.commit()
-        mydb.close()
+        self.connectionString.commit()
+        cur.close()
 
 
     def Show_Author_Combobox(self):
-        mydb = self.connectionString
-        print(mydb)
-        mycursor = mydb.cursor()
+        cur = self.connectionString.cursor()
 
         queryString = 'Select outhor_name FROM outhor'
-        mycursor.execute(queryString)
+        cur.execute(queryString)
         
-        data = mycursor.fetchall()
+        data = cur.fetchall()
 
         self.comboBox_11.clear()
         self.comboBox_5.clear()
@@ -763,26 +722,25 @@ class MainApp(QMainWindow , ui):
            # print(outhor)
             self.comboBox_11.addItem(outhor[0])
             self.comboBox_5.addItem(outhor[0])
-        mydb.commit()
-        mydb.close()
+        self.connectionString.commit()
+        cur.close()
 
 
     def Show_Publisher_Combobox(self):
-        mydb = self.connectionString
-        mycursor = mydb.cursor()
+        cur = self.connectionString.cursor()
 
         queryString = 'Select publisher_name FROM publisher'
-        mycursor.execute(queryString)
+        cur.execute(queryString)
         
-        data = mycursor.fetchall()
+        data = cur.fetchall()
 
         self.comboBox_10.clear()
         self.comboBox_4.clear()
         for publisher in data :
             self.comboBox_10.addItem(publisher[0])
             self.comboBox_4.addItem(publisher[0])
-        mydb.commit()
-        mydb.close()
+        self.connectionString.commit()
+        cur.close()
 
 
     #############################################
@@ -790,8 +748,8 @@ class MainApp(QMainWindow , ui):
 
 
     def Export_Day_Operations(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
+
 
         show_handel_day_operation_query = ("SELECT book_name, client, type, date_days, to_days,  days FROM dayoperations")
         cur.execute(show_handel_day_operation_query)
@@ -814,13 +772,14 @@ class MainApp(QMainWindow , ui):
                 column_number += 1
             row_number += 1
 
-        wb.close() 
+        wb.close()
+        cur.close()
         self.statusBar().showMessage('Report Created Successfully')
 
 
     def Export_Clients(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
+
 
         Show_All_Client_query = ("Select client_name, client_email, client_nationalid From clients")
         cur.execute(Show_All_Client_query)
@@ -841,13 +800,14 @@ class MainApp(QMainWindow , ui):
                 column_number += 1
             row_number += 1
 
-        wb.close() 
+        wb.close()
+        cur.close
         self.statusBar().showMessage('Report All Clients Successfully')        
 
 
     def Export_Books(self):
-        db = self.connectionString
-        cur = db.cursor()
+        cur = self.connectionString.cursor()
+
 
         Show_All_Client_query = ("Select book_code, book_name, book_description, book_category, book_outhor, book_publisher, book_price From book ")
         cur.execute(Show_All_Client_query)
@@ -871,7 +831,8 @@ class MainApp(QMainWindow , ui):
                 column_number += 1
             row_number += 1
 
-        wb.close() 
+        wb.close()
+        cur.close
         self.statusBar().showMessage('Report All Books Successfully')
 
 
