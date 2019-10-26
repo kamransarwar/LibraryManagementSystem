@@ -1,4 +1,5 @@
-###Library Management System
+### Library Management System
+
 Library Management System written in Python, PyQt5 and MySQL
 
 The Library Management System will have the following listed features:
