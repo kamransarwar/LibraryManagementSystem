@@ -2,6 +2,18 @@
 
 Library Management System written in Python, PyQt5 and MySQL
 
+### Python
+- Python is an interpreted, high-level, general-purpose programming language.
+- Python can be used in database applications.
+
+### PyQt5
+- PyQt5 is a module that can be used to create graphical user interfaces (GUI).
+- PyQt5 is one of the best frameworks for developing desktop application.
+
+### MySQL
+- MySQL is one of the most common open source databases for storing Python web applications' data. 
+
+
 The Library Management System will have the following listed features:
 
 1. Book Catalogue Management
@@ -11,6 +23,7 @@ The Library Management System will have the following listed features:
 5. Client Management
 6. Books transactions [Rent/Retreive] Management
 7. Data export in the forms of Excel sheets
+<br>
 
 1. Book Catalogue Management
 - Add new Book
@@ -40,14 +53,3 @@ The Library Management System will have the following listed features:
 - Add new Publisher
 - Edit new Publisher
 - Delete new Publisher
-
-### Python
-- Python is an interpreted, high-level, general-purpose programming language.
-- Python can be used in database applications.
-
-### PyQt5
-- PyQt5 is a module that can be used to create graphical user interfaces (GUI).
-- PyQt5 is one of the best frameworks for developing desktop application.
-
-### MySQL
-- MySQL is one of the most common open source databases for storing Python web applications' data. 
