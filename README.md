@@ -40,13 +40,13 @@ The Library Management System will have the following listed features:
 - Edit new Publisher
 - Delete new Publisher
 
-###Python
+### Python
 - Python is an interpreted, high-level, general-purpose programming language.
 - Python can be used in database applications.
 
-###PyQt5
+### PyQt5
 - PyQt5 is a module that can be used to create graphical user interfaces (GUI).
 - PyQt5 is one of the best frameworks for developing desktop application.
 
-###MySQL
+### MySQL
 - MySQL is one of the most common open source databases for storing Python web applications' data. 
