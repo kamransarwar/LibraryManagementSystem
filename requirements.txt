@@ -1,0 +1,4 @@
+mysql==0.0.2
+xlrd==1.2.0
+xlsxwriter==1.2.2
+django==2.2.6
