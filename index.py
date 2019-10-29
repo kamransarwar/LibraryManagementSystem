@@ -26,18 +26,17 @@ class Login(QWidget , login):
 
         username = self.lineEdit.text()
         password = self.lineEdit_2.text()
-#requires all usernames to be unique
+        #requires all usernames to be unique
         login_query = ('''SELECT * FROM User WHERE Username= ? AND Password= ?''',(username,password,))
 
         cur.execute(login_query)
         data = cur.fetchall()
         if str(data) == "[]":
-                self.label.setText('Make Sure You Enterd Your User Name And Password Correctly.')
-                
-            else:
-                print("User Match")
-                self.close()
-                self.window2.show()
+            self.label.setText('Make Sure You Enterd Your User Name And Password Correctly.')
+        else:
+            print("User Match")
+            self.close()
+            self.window2.show()
                 
         cur.close()
 
