@@ -1,7 +1,21 @@
-mysql-connector-python-rf==2.2.2
-pkg-resources==0.0.0
-PyQt5==5.13.1
-PyQt5-sip==12.7.0
-xlrd==1.2.0
-XlsxWriter==1.2.2
+--------------------
+Project Requirements
+--------------------
+Python 3.7
+MySQL 2.x
+PyQT5
+QTDesigner(GUI Designing Tool Recommended)
+--------------------
+Project Dependencies
+--------------------
+PyQt5.QtCore	
+PyQt5.QtGui		
+PyQt5.QtWidgets 
+sys
+mysql.connector
+PyQt5.uic		
+datetime
+xlrd import		
+xlsxwriter		
+
 
