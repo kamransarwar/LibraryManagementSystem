@@ -27,17 +27,18 @@ class Login(QWidget , login):
         username = self.lineEdit.text()
         password = self.lineEdit_2.text()
 #requires all usernames to be unique
-        login_query = ('''SELECT * FROM User WHERE Username= ? AND Password= ?''',(username,password,))
+        login_query = ("SELECT * FROM users WHERE user_name = %s AND user_password= %s")
+        login_query_data = (username, password)
 
-        cur.execute(login_query)
+        cur.execute(login_query, login_query_data)
         data = cur.fetchall()
         if str(data) == "[]":
                 self.label.setText('Make Sure You Enterd Your User Name And Password Correctly.')
-                
-            else:
-                print("User Match")
-                self.close()
-                self.window2.show()
+        else:
+            print("User Match")
+            self.window2 = MainApp()
+            self.close()
+            self.window2.show()
                 
         cur.close()
 
@@ -220,7 +221,7 @@ class MainApp(QMainWindow , ui):
     def Show_All_Book(self):
         cur = self.connectionString.cursor()
 
-        Show_All_Client_query = ("Select book_code, book_name, book_description, book_category, book_author, book_publisher, book_price From book ")
+        Show_All_Client_query = ("Select book_code, book_name, book_description, book_category, book_outhor, book_publisher, book_price From book ")
         cur.execute(Show_All_Client_query)
         data = cur.fetchall()
 
@@ -250,7 +251,7 @@ class MainApp(QMainWindow , ui):
         book_price = self.lineEdit_9.text()
 
         add_book_sql_query = ("INSERT INTO book "
-                        "(book_name, book_description, book_code, book_category, book_author, book_publisher, book_price)"
+                        "(book_name, book_description, book_code, book_category, book_outhor, book_publisher, book_price) "
                         "VALUES (%s, %s, %s, %s, %s, %s, %s)")
 
         add_book_sql_query_data = (book_title, book_description, book_code, book_category, book_author, book_publisher, book_price)
@@ -312,7 +313,7 @@ class MainApp(QMainWindow , ui):
         Search_Book_title = self.lineEdit_3.text()
         
         edit_book_query = ("update book set book_name=%s, book_description=%s, book_code=%s, book_category=%s,"
-                        " book_author=%s, book_publisher=%s, book_price=%s "
+                        " book_outhor=%s, book_publisher=%s, book_price=%s "
                         "Where id=%s")
 
         edit_book_query_data = (book_title, book_description, book_code, book_category, book_author, book_publisher, book_price, int(book_id))
@@ -586,7 +587,7 @@ class MainApp(QMainWindow , ui):
 
         author_name = self.lineEdit_23.text()
 
-        queryString = 'INSERT INTO author (author_name) VALUES ("' + author_name + '")'
+        queryString = 'INSERT INTO outhor (outhor_name) VALUES ("' + author_name + '")'
         cur.execute(queryString)
         self.connectionString.commit()
         cur.close()
@@ -598,7 +599,7 @@ class MainApp(QMainWindow , ui):
 
     def Show_Author(self):
         cur = self.connectionString.cursor()
-        queryString = 'Select author_name from author order by author_name asc'
+        queryString = 'select outhor_name from outhor order by outhor_name asc'
 
         cur.execute(queryString)
         data = cur.fetchall()
@@ -620,9 +621,9 @@ class MainApp(QMainWindow , ui):
 
         author_Name = self.lineEdit_29.text()
         
-        warning = QMessageBox.warning(self, 'Delete author', "Are You Sure You Want To Delete This author", QMessageBox.Yes | QMessageBox.No)
+        warning = QMessageBox.warning(self, 'Delete outhor', "Are You Sure You Want To Delete This outhor", QMessageBox.Yes | QMessageBox.No)
         if warning == QMessageBox.Yes :
-            delete_author_query = ("delete from author where author_Name=%s")
+            delete_author_query = ("delete from outhor where outhor_name=%s")
             cur.execute(delete_author_query, [(author_Name)])
             self.connectionString.commit()
             self.statusBar().showMessage('author Deleted')
@@ -711,7 +712,7 @@ class MainApp(QMainWindow , ui):
     def Show_Author_Combobox(self):
         cur = self.connectionString.cursor()
 
-        queryString = 'Select author_name FROM author'
+        queryString = 'Select outhor_name FROM outhor'
         cur.execute(queryString)
         
         data = cur.fetchall()
@@ -809,7 +810,7 @@ class MainApp(QMainWindow , ui):
         cur = self.connectionString.cursor()
 
 
-        Show_All_Client_query = ("Select book_code, book_name, book_description, book_category, book_author, book_publisher, book_price From book ")
+        Show_All_Client_query = ("Select book_code, book_name, book_description, book_category, book_outhor, book_publisher, book_price From book ")
         cur.execute(Show_All_Client_query)
         data = cur.fetchall()
 
