@@ -29,7 +29,7 @@ class Login(QWidget , login):
 #requires all usernames to be unique
         login_query = ("SELECT * FROM users WHERE user_name = %s AND user_password= %s")
         login_query_data = (username, password)
-
+##
         cur.execute(login_query, login_query_data)
         data = cur.fetchall()
         if str(data) == "[]":
